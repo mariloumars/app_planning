@@ -1,4 +1,6 @@
 import {state} from "./state";
+import {courses} from "../data/courses.js";
+// var coursesDB = require("../data/courses.js");
 
 const $elements = {
   modal: null,
@@ -18,7 +20,7 @@ const template = `
     <div class="content">
       <div class="data">
         <h3>Create event on <span></span></h3>
-        <input placeholder="Event..." type="text" />
+        <select class="select" name="select2" id="select_courses"></select>
       </div>
       <footer>
         <button class="cancel">Cancel</button>
@@ -32,7 +34,8 @@ export function initEventModal() {
   state.$element.insertAdjacentHTML('beforeend', template);
   $elements.modal = document.querySelector("section.event-modal");
   $elements.header = $elements.modal.querySelector("h3");
-  $elements.input = $elements.modal.querySelector("input");
+  $elements.input = $elements.modal.querySelector("select");
+  SetDataSelectCourses();
 
   $elements.modal.querySelector(".cancel").addEventListener("click", hideEventModal);
   $elements.modal.querySelector(".primary").addEventListener("click", save);
@@ -64,4 +67,17 @@ export function save() {
 
 export function hideEventModal() {
   $elements.modal.style.display = "none";
+}
+
+export function SetDataSelectCourses(){
+  const SelectCourses = document.getElementById("select_courses")
+
+  Object.keys(courses).map(function(k){
+    var option = document.createElement('option')
+    option.setAttribute('value', courses[k].name)
+    option.innerText = courses[k].name
+    SelectCourses.appendChild(option)
+    console.log(SelectCourses)
+    console.log(option)
+  })
 }
